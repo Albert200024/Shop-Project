@@ -1,0 +1,24 @@
+@media(max-width:980px){
+    .btnNavbar{
+        margin-right: 380px;
+    }
+}
+
+@media(max-width:800px){
+       #containerNav{
+        margin-left: 45px;
+    }
+}
+
+
+@media(max-width:767px){
+    #containerNav{
+     margin-left: 25px;
+    }
+
+    .btnNavbar button, .cart{
+        width: 120px;
+        height: 40px;
+    }
+    
+}
