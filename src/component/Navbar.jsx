@@ -7,8 +7,8 @@ import SignUp from './buttoNav/SignUp';
 import "../style/Navbar.css"
 
 export default function Navbar() {
-  const state = useSelector(state => state.handleCart)
-  
+  const  {cart} = useSelector(state => state)
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm" id='containerNav'>
@@ -38,7 +38,7 @@ export default function Navbar() {
               <Login/>
               <SignUp/>
               <NavLink to="/cart" className="btn btn-outline-dark ms-2 cart">
-                <i className='fa fa-shopping-cart me-1'></i> Cart ({state.length})
+                <i className='fa fa-shopping-cart me-1'></i> Cart ({cart.length})
               </NavLink>
             </div>
           </div>

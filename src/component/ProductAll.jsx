@@ -1,54 +1,21 @@
-import React, {useState, useEffect} from 'react'
-import Skeleton from 'react-loading-skeleton';
 import { NavLink } from 'react-router-dom';
- 
-export default function Product() {
+import { useSelector, useDispatch, } from 'react-redux'
+import { filterProduct, allProduct} from '../store/action';
 
-   const [data, setData] = useState([])
-   const [filter, setFilter] = useState(data);
-   const [loadig, setLoading] = useState(false)
-   let componentMoutend = true;
+export default function ProductAll() {
+   const {data} = useSelector(state => state)
+   const dispatch = useDispatch()
 
-   useEffect(() => {
-       const getProducts = async () => {
-                 setLoading(true);
-                 const response = await fetch("https://fakestoreapi.com/products");
-                 if(componentMoutend){
-                     setData(await response.clone().json());
-                     setFilter(await response.json());
-                     setLoading(false);
-                     console.log(filter )
-                 } 
-
-                 return () => {
-                     componentMoutend = false;
-                 }  
-       }
-       getProducts()   
-   }, [])
+  const filterProducts = (cat) => {
+    dispatch(filterProduct(cat))
+  }
 
   const Loadig = () => {
     return (
       <>
-        <div className="col-md-3">
-          <Skeleton height={350} />
-        </div>
-        <div className="col-md-3">
-          <Skeleton height={350} />
-        </div>
-        <div className="col-md-3">
-          <Skeleton height={350} />
-        </div>
-        <div className="col-md-3">
-          <Skeleton height={350} />
-        </div>
+        <h1>Loading...</h1>
       </>
     )
-  }
-
-  const filterProducts = (cat) => {
-     const updateList = data.filter((x) => x.category === cat)
-     setFilter(updateList)
   }
 
   const ShowProducts = () => {
@@ -56,7 +23,7 @@ export default function Product() {
       <>
         <div className="buttons d-flex justify-content-center mb-5 pb-5">
           <button className="btn btn-outline-dark me-2" onClick={() => 
-            setFilter(data)}>ALL</button>
+            dispatch(allProduct())}>ALL</button>
           <button className="btn btn-outline-dark me-2" onClick={() => 
             filterProducts("men's clothing")}>Men's Clothinng</button>
           <button className="btn btn-outline-dark me-2" onClick={() => 
@@ -66,11 +33,10 @@ export default function Product() {
           <button className="btn btn-outline-dark me-2" onClick={() => 
             filterProducts("electronics")}>Electroic</button>
         </div>
-        {filter.map((product, index) => {
 
+        {data.filterData.map((product, index) => {
             return (
-              <>
-                <div className='col-md-3 mb-4'>
+                <div className='col-md-3 mb-4' key={index}>
                   <div className="card h-100 text-center p-4" key={product.id}>
                     <img src={product.image} className="card-img-top" alt={product.title}
                      height = "300px" />
@@ -84,7 +50,7 @@ export default function Product() {
                       </div>
                   </div>
                 </div>
-              </>
+              
             )
         })}
       </>
@@ -102,7 +68,7 @@ export default function Product() {
                  </div>
             </div>
             <div className="row justify-content-center ">
-                {loadig ? <Loadig/> : <ShowProducts/>} 
+                { data.loading ? <Loadig/> : <ShowProducts/>} 
             </div>
         </div>
     </div>

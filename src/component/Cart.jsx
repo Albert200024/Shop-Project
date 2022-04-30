@@ -4,7 +4,7 @@ import { addCart, deletCart } from '../store/action'
 import { NavLink } from 'react-router-dom'
 
 const Cart = () => {
-    const state = useSelector((state)=> state.handleCart)
+    const {cart} = useSelector(state => state)
     const dispatch = useDispatch()
 
     const handleAdd = (item) => {
@@ -71,9 +71,9 @@ const Cart = () => {
 
     return (
         <div>
-            {state.length === 0 && emptyCart()}
-            {state.length !== 0 && state.map(cartItems)}
-            {state.length !== 0 && buttons()}
+            {cart.length === 0 && emptyCart()}
+            {cart.length !== 0 && cart.map(cartItems)}
+            {cart.length !== 0 && buttons()}
         </div>
     );
 }

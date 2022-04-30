@@ -11,3 +11,16 @@ export const deletCart = (product) => {
        payload: product
    }
 }
+
+export const filterProduct = (categoria) => {
+    return {
+        type:"filter_product",
+        payload:categoria
+    }
+}
+
+export const allProduct = () => {
+    return {
+        type:"all_product"
+    }
+}
